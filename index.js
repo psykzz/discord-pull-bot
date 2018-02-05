@@ -29,7 +29,7 @@ client.on('message', async msg => {
   if(!msg.guild) return console.log('[skip] no guild');
   if(msg.author.bot) return console.log('[skip] bot user');
 
-  const match = /^\/pull (\d)+\s*$/gi.exec(msg.content)
+  const match = /^\/pull (\d+)\s*$/gi.exec(msg.content)
   if (!match) {
     return console.log('[skip] no match');
   }
