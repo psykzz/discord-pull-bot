@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 
-const DISCORD_TOKEN = process.env.DISCORD_TOKEN || 'MzM4MDAxODAyMjkxMDUyNTQ0.DVpNOQ.WOzAegRIR6Q9jEN5GAg1f76rpSU';
+const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 
 const COUNTING_DOWN = {}
 
