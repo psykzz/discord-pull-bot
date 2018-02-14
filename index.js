@@ -70,7 +70,11 @@ const countdown = async (connection, originalMsg, lastMsg, pullTimer) => {
     } else {
       values[1].delete()
       originalMsg.delete()
-      if(connection) {connection.disconnect()}
+      if(connection) {
+        setTimeout(() => {
+          connection.disconnect();
+        }, 1000);
+      }
       COUNTING_DOWN[originalMsg.guild.id] = false;
     }
   })
