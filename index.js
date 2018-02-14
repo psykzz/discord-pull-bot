@@ -54,8 +54,6 @@ const playSound = async (connection, voice, timer, limit) => {
 }
 
 const countdown = async (connection, originalMsg, lastMsg, pullTimer) => {
-  pullTimer -= 1;
-
   const voice = 'Xayz';
 
   Promise.all([
@@ -65,7 +63,7 @@ const countdown = async (connection, originalMsg, lastMsg, pullTimer) => {
   ]).then(values => {
     if (pullTimer > 0) {
       setTimeout(() => {
-        countdown(connection, originalMsg, values[1], pullTimer);
+        countdown(connection, originalMsg, values[1], pullTimer - 1);
       }, 1000);
     } else {
       values[1].delete()
@@ -73,7 +71,7 @@ const countdown = async (connection, originalMsg, lastMsg, pullTimer) => {
       if(connection) {
         setTimeout(() => {
           connection.disconnect();
-        }, 1000);
+        }, 250);
       }
       COUNTING_DOWN[originalMsg.guild.id] = false;
     }
