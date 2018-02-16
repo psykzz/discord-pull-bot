@@ -31,8 +31,8 @@ client.on('message', async msg => {
   if(msg.author.bot) return console.log('[skip] bot user');
 
 
-  const match = /^\/ree$/gi.exec(msg.content)
-  if (match) {
+  const reeMatch = /^\/ree$/gi.exec(msg.content)
+  if (reeMatch) {
     let connection;
     if (msg.member.voiceChannel) {
       connection = await msg.member.voiceChannel.join();
