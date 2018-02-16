@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
+var fs = require('fs');
 
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 
@@ -29,6 +30,26 @@ client.on('message', async msg => {
   if(!msg.guild) return console.log('[skip] no guild');
   if(msg.author.bot) return console.log('[skip] bot user');
 
+
+  const match = /^\/ree$/gi.exec(msg.content)
+  if (match) {
+    let connection;
+    if (msg.member.voiceChannel) {
+      connection = await msg.member.voiceChannel.join();
+      setTimeout(() => {
+        if (fs.existsSync(`./sounds/${voice}/${timer}.ogg`)) {
+          connection.playFile(`./sounds/${voice}/ree.ogg`)
+        }
+
+        setTimeout(() => {
+          if(connection) {connection.disconnect()}
+        }, 250);
+      }, 50);
+    }
+    return console.log('[skip] /ree called');
+
+  }
+
   const match = /^\/pull (\d+)\s*$/gi.exec(msg.content)
   if (!match) {
     return console.log('[skip] no match');
@@ -50,6 +71,7 @@ client.on('message', async msg => {
 const playSound = async (connection, voice, timer, limit) => {
   if (!connection) return console.log('[skip-timer] no connection')
   if (timer > limit) return console.log('[skip-timer] over limit')
+  if (!fs.existsSync(`./sounds/${voice}/${timer}.ogg`)) return console.log('[skip-timer] file not found');
   return connection.playFile(`./sounds/${voice}/${timer}.ogg`)
 }
 
