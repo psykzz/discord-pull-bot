@@ -76,7 +76,7 @@ const playSound = async (connection, voice, timer, limit) => {
 }
 
 const countdown = async (connection, originalMsg, lastMsg, pullTimer) => {
-  const voice = 'Xayz';
+  const voice = 'Jerry';
 
   Promise.all([
     lastMsg.delete(),
