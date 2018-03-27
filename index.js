@@ -10,26 +10,46 @@ const COUNTING_DOWN = {}
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
   console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
-  client.user.setActivity(`on ${client.guilds.size} servers`);
+  client.user.setActivity(`on ${client.guilds.size} Servers`);
 });
 
 client.on("guildCreate", guild => {
   // This event triggers when the bot joins a guild.
   console.log(`New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`);
-  client.user.setGame(`on ${client.guilds.size} servers`);
+  client.user.setGame(`on ${client.guilds.size} Servers`);
 });
 
 client.on("guildDelete", guild => {
   // this event triggers when the bot is removed from a guild.
-  console.log(`I have been removed from: ${guild.name} (id: ${guild.id})`);
-  client.user.setGame(`on ${client.guilds.size} servers`);
+  console.log(`Remove from: ${guild.name} (id: ${guild.id})`);
+  client.user.setGame(`on ${client.guilds.size} Servers`);
 });
+
+
+function registerSound(msg, trigger, soundPath) {
+    if (!msg.member.voiceChannel) return
+    var pattern = new RegExp(`^\/${trigger}$`, 'gi');
+    var match = pattern.exec(msg.content);
+    if (!match) return;
+
+    let connection = await msg.member.voiceChannel.join();
+    let dispatcher = connection.playFile(`./sounds/${voice}/${timer}.ogg`);
+
+    dispatcher.on('speaking', (speaking) => {
+        if(!speaking) connection.disconnect();
+    });
+
+    return true;
+}
+
+
 
 client.on('message', async msg => {
   if(!msg.member) return console.log('[skip] no member');
   if(!msg.guild) return console.log('[skip] no guild');
   if(msg.author.bot) return console.log('[skip] bot user');
 
+  registerSound(msg, 'lettuce', './sounds/random/15footfungus.ogg');
 
   const reeMatch = /^\/ree$/gi.exec(msg.content)
   if (reeMatch) {
@@ -37,7 +57,7 @@ client.on('message', async msg => {
     if (msg.member.voiceChannel) {
       connection = await msg.member.voiceChannel.join();
       setTimeout(() => {
-        if (fs.existsSync(`./sounds/${voice}/${timer}.ogg`)) {
+        if (fs.existsSync(`./sounds/${voice}/ree.ogg`)) {
           connection.playFile(`./sounds/${voice}/ree.ogg`)
         }
 
