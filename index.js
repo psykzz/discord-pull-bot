@@ -26,7 +26,7 @@ client.on("guildDelete", guild => {
 });
 
 
-function registerSound(msg, trigger, soundPath) {
+async function registerSound(msg, trigger, soundPath) {
     if (!msg.member.voiceChannel) return
     var pattern = new RegExp(`^\/${trigger}$`, 'gi');
     var match = pattern.exec(msg.content);
