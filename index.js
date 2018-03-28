@@ -7,6 +7,11 @@ const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 const COUNTING_DOWN = {}
 
 
+client.on('error', (err) => {
+  console.log(`An error occurred!`);
+  console.log(err);
+});
+
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
   console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
