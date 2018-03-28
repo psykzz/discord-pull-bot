@@ -55,6 +55,7 @@ client.on('message', async msg => {
   if(msg.author.bot) return console.log('[skip] bot user');
 
   registerSound(msg, 'lettuce', './sounds/random/15footfungus.ogg');
+  registerSound(msg, 'shutdown', './sounds/random/winxpshutdown.ogg');
 
   const reeMatch = /^\/ree$/gi.exec(msg.content)
   if (reeMatch) {
