@@ -33,7 +33,7 @@ async function registerSound(msg, trigger, soundPath) {
     if (!match) return;
 
     let connection = await msg.member.voiceChannel.join();
-    let dispatcher = connection.playFile(`./sounds/${voice}/${timer}.ogg`);
+    let dispatcher = connection.playFile(soundPath);
 
     dispatcher.on('speaking', (speaking) => {
         if(!speaking) connection.disconnect();
