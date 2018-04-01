@@ -6,6 +6,9 @@ const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 
 const COUNTING_DOWN = {}
 
+const ROASTS = [
+  "Your family tree is a fucking circle :babyrage~1:",
+];
 
 client.on('error', (err) => {
   console.log(`An error occurred!`);
@@ -36,6 +39,7 @@ async function registerSound(msg, trigger, soundPath) {
     var pattern = new RegExp(`^\/${trigger}$`, 'gi');
     var match = pattern.exec(msg.content);
     if (!match) return;
+    if (!fs.existsSync(soundPath)) return;
 
     let connection = await msg.member.voiceChannel.join();
     let dispatcher = connection.playFile(soundPath);
@@ -47,7 +51,21 @@ async function registerSound(msg, trigger, soundPath) {
     return true;
 }
 
+async function registerMessage(msg, trigger, reply) {
+  var pattern = new RegExp(`^\/${trigger}$`, 'gi');
+  var match = pattern.exec(msg.content);
+  if (!match) return;
 
+  msg.reply(reply);
+}
+
+async function registerFunction(msg, trigger, callback) {
+  var pattern = new RegExp(`^\/${trigger}$`, 'gi');
+  var match = pattern.exec(msg.content);
+  if (!match) return;
+  
+  return callback();
+}
 
 client.on('message', async msg => {
   if(!msg.member) return console.log('[skip] no member');
@@ -56,25 +74,15 @@ client.on('message', async msg => {
 
   registerSound(msg, 'lettuce', './sounds/random/15footfungus.ogg');
   registerSound(msg, 'shutdown', './sounds/random/winxpshutdown.ogg');
-
-  const reeMatch = /^\/ree$/gi.exec(msg.content)
-  if (reeMatch) {
-    let connection;
-    if (msg.member.voiceChannel) {
-      connection = await msg.member.voiceChannel.join();
-      setTimeout(() => {
-        if (fs.existsSync(`./sounds/${voice}/ree.ogg`)) {
-          connection.playFile(`./sounds/${voice}/ree.ogg`)
-        }
-
-        setTimeout(() => {
-          if(connection) {connection.disconnect()}
-        }, 250);
-      }, 50);
+  registerSound(msg, 'ree', './sounds/Jerry/ree.ogg');
+  
+  registerFunction(msg, 'roast', () => {
+    var roast = ROASTS[Math.floor(Math.random() * ROASTS.length)];
+    if(msg.mentions.users) {
+      return msg.channel.send(roast, {reply: msg.mentions.users})
     }
-    return console.log('[skip] /ree called');
-
-  }
+    msg.reply(roast);  
+  })
 
   const match = /^\/pull (\d+)\s*$/gi.exec(msg.content)
   if (!match) {
