@@ -60,10 +60,10 @@ async function registerMessage(msg, trigger, reply) {
 }
 
 async function registerFunction(msg, trigger, callback) {
-  var pattern = new RegExp(`^\/${trigger}$`, 'gi');
+  var pattern = new RegExp(`^\/${trigger}`, 'gi');
   var match = pattern.exec(msg.content);
   if (!match) return;
-  
+
   return callback();
 }
 
@@ -75,13 +75,15 @@ client.on('message', async msg => {
   registerSound(msg, 'lettuce', './sounds/random/15footfungus.ogg');
   registerSound(msg, 'shutdown', './sounds/random/winxpshutdown.ogg');
   registerSound(msg, 'ree', './sounds/Jerry/ree.ogg');
-  
+  registerSound(msg, 'waaah', './sounds/random/coffee/Waaaaaah.ogg');
+  registerSound(msg, 'wow', './sounds/random/coffee/Wow.ogg');
+
   registerFunction(msg, 'roast', () => {
     var roast = ROASTS[Math.floor(Math.random() * ROASTS.length)];
     if(msg.mentions.users) {
       return msg.channel.send(roast, {reply: msg.mentions.users})
     }
-    msg.reply(roast);  
+    msg.reply(roast);
   })
 
   const match = /^\/pull (\d+)\s*$/gi.exec(msg.content)
