@@ -7,7 +7,7 @@ const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 const COUNTING_DOWN = {}
 
 const ROASTS = [
-  "Your family tree is a fucking circle :babyrage~1:",
+  "Your family tree is a fucking circle :babyrage:",
 ];
 
 client.on('error', (err) => {
@@ -68,9 +68,20 @@ async function registerFunction(msg, trigger, callback) {
 }
 
 client.on('message', async msg => {
+    if(msg.content.indexOf('@everyone') === -1) return;
+    const ree = client.emojis.find("name", "pingree");
+    const ree2 = client.emojis.find("name", "angreeping");
+    if(!ree) ree = '💩';
+    msg.react(ree);
+    if(ree2) msg.react(ree2);
+})
+
+client.on('message', async msg => {
   if(!msg.member) return console.log('[skip] no member');
   if(!msg.guild) return console.log('[skip] no guild');
   if(msg.author.bot) return console.log('[skip] bot user');
+
+
 
   registerSound(msg, 'lettuce', './sounds/random/15footfungus.ogg');
   registerSound(msg, 'shutdown', './sounds/random/winxpshutdown.ogg');
@@ -81,7 +92,7 @@ client.on('message', async msg => {
   registerFunction(msg, 'roast', () => {
     var roast = ROASTS[Math.floor(Math.random() * ROASTS.length)];
     if(msg.mentions.users) {
-      return msg.channel.send(roast, {reply: msg.mentions.users})
+      return msg.channel.send(`${msg.mentions.users.array().join(' ')}, ${roast}`)
     }
     msg.reply(roast);
   })
