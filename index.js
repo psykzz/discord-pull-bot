@@ -144,6 +144,8 @@ client.on('message', async msg => {
   registerSound(msg, 'waaah', './sounds/random/coffee/Waaaaaah.ogg');
   registerSound(msg, 'wow', './sounds/random/coffee/Wow.ogg');
   registerSound(msg, 'nazijoke', './sounds/random/nazi-knockknock.ogg');
+  registerSound(msg, 'omae', './sounds/random/omae.ogg');
+  registerSound(msg, 'nani', './sounds/random/nani.ogg');
 
   registerFunction(msg, 'roast', () => {
     var roast = ROASTS[Math.floor(Math.random() * ROASTS.length)];
