@@ -101,6 +101,7 @@ async function registerSound(msg, trigger, soundPath) {
 
     dispatcher.on('speaking', (speaking) => {
         if(!speaking) connection.disconnect();
+        msg.delete();
     });
 
     return true;
