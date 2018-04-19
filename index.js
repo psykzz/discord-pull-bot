@@ -152,8 +152,8 @@ client.on('message', async msg => {
 
   registerFunction(msg, 'roast', () => {
     var roast = ROASTS[Math.floor(Math.random() * ROASTS.length)];
-    if(msg.mentions.users) {
-      return msg.channel.send(`${msg.mentions.users.array().join(' ')}, ${roast}`)
+    if(msg.mentions.members) {
+      return msg.channel.send(`${msg.mentions.members.array().join(', ')}, ${roast}`)
     }
     msg.reply(roast);
   })
