@@ -74,6 +74,7 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
   console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
   client.user.setActivity(`on ${client.guilds.size} Servers`);
+  client.user.setUsername('HeiHei'); // Set new name
 });
 
 client.on("guildCreate", guild => {
@@ -101,6 +102,7 @@ async function registerSound(msg, trigger, soundPath) {
 
     dispatcher.on('speaking', (speaking) => {
         if(!speaking) connection.disconnect();
+        msg.delete();
     });
 
     return true;
@@ -151,8 +153,8 @@ client.on('message', async msg => {
 
   registerFunction(msg, 'roast', () => {
     var roast = ROASTS[Math.floor(Math.random() * ROASTS.length)];
-    if(msg.mentions.users) {
-      return msg.channel.send(`${msg.mentions.users.array().join(' ')}, ${roast}`)
+    if(msg.mentions.members) {
+      return msg.channel.send(`${msg.mentions.members.array().join(', ')}, ${roast}`)
     }
     msg.reply(roast);
   })
