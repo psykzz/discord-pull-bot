@@ -96,6 +96,9 @@ async function registerSound(msg, trigger, soundPath) {
     var match = pattern.exec(msg.content);
     if (!match) return;
     if (!fs.existsSync(soundPath)) return;
+  
+    if (!msg.member.voiceChannel.joinable) return msg.reply(`I don't have access to that channel.`);
+    if (!msg.member.voiceChannel.speakable) return msg.reply(`I can't speak in that channel.`);
 
     let connection = await msg.member.voiceChannel.join();
     let dispatcher = connection.playFile(soundPath);
